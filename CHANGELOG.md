@@ -1,3 +1,10 @@
+## <small>1.10.2 (2023-02-10)</small>
+
+
+#### Features
+
+* **admin-ui** Add the Global Options select based on facet values ([0f56816](https://github.com/UpLab/vendure/commit/0f56816))
+
 ## <small>1.10.1 (2023-02-07)</small>
 
 
