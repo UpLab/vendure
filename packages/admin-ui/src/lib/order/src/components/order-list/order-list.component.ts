@@ -260,4 +260,8 @@ export class OrderListComponent
             return '';
         }
     }
+
+    getIsCallback(order: Order) {
+        return order.customFields.isCallback ? 'yes' : 'no';
+    }
 }
