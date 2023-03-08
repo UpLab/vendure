@@ -1,6 +1,6 @@
 # Uplab Vendure Admin UI
 
-This is a fork from [Vendure project](https://github.com/vendure-ecommerce/vendure) version 1.9.2.
+This is a fork from [Vendure project](https://github.com/vendure-ecommerce/vendure) version 1.9.3.
 
 ## What's new
 
