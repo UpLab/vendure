@@ -1,3 +1,18 @@
+## <small>1.10.5 (2023-03-08)</small>
+
+
+#### Features
+
+* **admin-ui** Add the callback column and remove the updated at column on the orders page ([15886df](https://github.com/UpLab/vendure/commit/15886df))
+* **admin-ui** Add the Global Options select based on facet values ([0f56816](https://github.com/UpLab/vendure/commit/0f56816))
+* **admin-ui** Rename package ([585e53f](https://github.com/UpLab/vendure/commit/585e53f))
+
+#### Fixes
+
+* **core** Filter out deleted options groups (#2047) ([d93203c](https://github.com/UpLab/vendure/commit/d93203c)), closes [#2047](https://github.com/UpLab/vendure/issues/2047)
+* **core** Merge relations in customFields correctly (#2062) ([aeb06e3](https://github.com/UpLab/vendure/commit/aeb06e3)), closes [#2062](https://github.com/UpLab/vendure/issues/2062)
+* **testing** Updated sql.js dependency (#2055) ([34ab54b](https://github.com/UpLab/vendure/commit/34ab54b)), closes [#2055](https://github.com/UpLab/vendure/issues/2055)
+
 ## <small>1.9.3 (2023-02-15)</small>
 
 
