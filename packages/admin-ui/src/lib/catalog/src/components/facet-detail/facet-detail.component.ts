@@ -39,6 +39,7 @@ export class FacetDetailComponent
     customValueFields: CustomFieldConfig[];
     detailForm: FormGroup;
     values: Array<FacetWithValues.Values | { name: string; code: string }>;
+    autoUpdateProductOptions = true;
     readonly updatePermission = [Permission.UpdateCatalog, Permission.UpdateFacet];
 
     constructor(
@@ -197,7 +198,12 @@ export class FacetDetailComponent
                             languageCode,
                         );
                         if (updatedValues.length) {
-                            updateOperations.push(this.dataService.facet.updateFacetValues(updatedValues));
+                            updateOperations.push(
+                                this.dataService.facet.updateFacetValues(
+                                    updatedValues,
+                                    this.autoUpdateProductOptions,
+                                ),
+                            );
                         }
                     }
 
@@ -302,6 +308,7 @@ export class FacetDetailComponent
             );
         }
 
+        this.detailForm.get('values')?.setValue([]);
         const currentValuesFormArray = this.detailForm.get('values') as FormArray;
         this.values = [...facet.values];
         facet.values.forEach(value => {

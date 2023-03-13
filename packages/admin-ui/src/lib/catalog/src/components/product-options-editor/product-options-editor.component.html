@@ -52,8 +52,8 @@
                         <input
                             [id]="'code-' + i"
                             type="text"
-                            [readonly]="!(updatePermission | hasPermission)"
                             formControlName="code"
+                            [readonly]="!(updatePermission | hasPermission)"
                         />
                     </vdr-form-field>
                 </div>
@@ -82,7 +82,13 @@
                                         [readonly]="!(updatePermission | hasPermission)"
                                     />
                                 </td>
-                                <td class="align-middle"><input type="text" formControlName="code" /></td>
+                                <td class="align-middle">
+                                    <input 
+                                        type="text" 
+                                        formControlName="code" 
+                                        [readonly]="!(updatePermission | hasPermission)"
+                                    />
+                                </td>
                             </tr>
                         </tbody>
                     </table>

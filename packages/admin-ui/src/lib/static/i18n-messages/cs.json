@@ -66,6 +66,7 @@
     "assign-variants-to-channel": "Přiřadit varianty do kanálu",
     "auto-update-option-variant-name": "Automaticky aktualizovat jména variant pomocí této",
     "auto-update-product-variant-name": "Automaticky aktualizovat jména variant",
+    "auto-update-product-option": "",
     "channel-price-preview": "Náhled ceny v kanálu",
     "collection-contents": "Obsah kolekce",
     "confirm-bulk-delete-collections": "",

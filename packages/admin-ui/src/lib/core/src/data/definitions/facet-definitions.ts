@@ -89,8 +89,8 @@ export const CREATE_FACET_VALUES = gql`
 `;
 
 export const UPDATE_FACET_VALUES = gql`
-    mutation UpdateFacetValues($input: [UpdateFacetValueInput!]!) {
-        updateFacetValues(input: $input) {
+    mutation UpdateFacetValues($input: [UpdateFacetValueInput!]!, $autoUpdate: Boolean) {
+        updateFacetValues(input: $input, autoUpdate: $autoUpdate) {
             ...FacetValue
         }
     }

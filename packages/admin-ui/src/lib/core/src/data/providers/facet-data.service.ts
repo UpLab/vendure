@@ -111,9 +111,10 @@ export class FacetDataService {
         );
     }
 
-    updateFacetValues(facetValues: UpdateFacetValueInput[]) {
+    updateFacetValues(facetValues: UpdateFacetValueInput[], autoUpdate?: boolean) {
         const input: UpdateFacetValues.Variables = {
             input: facetValues.map(pick(['id', 'code', 'translations', 'customFields'])),
+            autoUpdate,
         };
         return this.baseDataService.mutate<UpdateFacetValues.Mutation, UpdateFacetValues.Variables>(
             UPDATE_FACET_VALUES,

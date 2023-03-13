@@ -66,6 +66,7 @@
     "assign-variants-to-channel": "",
     "auto-update-option-variant-name": "",
     "auto-update-product-variant-name": "",
+    "auto-update-product-option": "",
     "channel-price-preview": "Podgląd cen kanału",
     "collection-contents": "Zawartość kolekcji",
     "confirm-bulk-delete-collections": "",

@@ -66,6 +66,7 @@
     "assign-variants-to-channel": "Atribuir variante ao canal",
     "auto-update-option-variant-name": "Utilizar esta opção para actualizar automaticamente os nomes das variantes",
     "auto-update-product-variant-name": "Actualizar automaticamente os nomes das variantes do produto",
+    "auto-update-product-option": "",
     "channel-price-preview": "Visualizar preço do canal",
     "collection-contents": "Conteúdo da categoria",
     "confirm-bulk-delete-collections": "",

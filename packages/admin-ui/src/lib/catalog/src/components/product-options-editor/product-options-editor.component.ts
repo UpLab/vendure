@@ -17,7 +17,6 @@ import {
     ProductOption,
     ProductOptionGroup,
     ServerConfigService,
-    UpdateFacetInput,
     UpdateProductOptionGroupInput,
     UpdateProductOptionInput,
 } from '@uplab/admin-ui/core';

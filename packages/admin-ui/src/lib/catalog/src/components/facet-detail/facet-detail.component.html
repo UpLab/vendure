@@ -20,14 +20,27 @@
             {{ 'common.create' | translate }}
         </button>
         <ng-template #updateButton>
-            <button
-                *vdrIfPermissions="updatePermission"
-                class="btn btn-primary"
-                (click)="save()"
-                [disabled]="detailForm.invalid || detailForm.pristine"
-            >
-                {{ 'common.update' | translate }}
-            </button>
+            <div class="flex center">
+                <div class="mr2">
+                    <clr-checkbox-wrapper>
+                        <input
+                            clrCheckbox
+                            type="checkbox"
+                            id="auto-update"
+                            [(ngModel)]="autoUpdateProductOptions"
+                        />
+                        <label>{{ 'catalog.auto-update-product-option' | translate }}</label>
+                    </clr-checkbox-wrapper>
+                </div>
+                <button
+                    *vdrIfPermissions="updatePermission"
+                    class="btn btn-primary"
+                    (click)="save()"
+                    [disabled]="detailForm.invalid || detailForm.pristine"
+                >
+                    {{ 'common.update' | translate }}
+                </button>
+            </div>
         </ng-template>
     </vdr-ab-right>
 </vdr-action-bar>
@@ -117,7 +130,13 @@
                             (input)="updateValueCode(facet.values[i]?.code, $event.target.value, i)"
                         />
                     </td>
-                    <td class="align-middle"><input type="text" formControlName="code" readonly /></td>
+                    <td class="align-middle">
+                        <input
+                            type="text"
+                            formControlName="code"
+                            [readonly]="!(updatePermission | hasPermission)"
+                        />
+                    </td>
                     <td class="" *ngIf="customValueFields.length">
                         <vdr-tabbed-custom-fields
                             entityName="FacetValue"

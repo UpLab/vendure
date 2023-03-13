@@ -6628,6 +6628,7 @@ export type CreateFacetValuesMutation = { createFacetValues: Array<(
 
 export type UpdateFacetValuesMutationVariables = Exact<{
   input: Array<UpdateFacetValueInput> | UpdateFacetValueInput;
+  autoUpdate?: Maybe<Scalars['Boolean']>;
 }>;
 
 

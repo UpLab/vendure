@@ -67,7 +67,7 @@ export class ProductVariantsEditorComponent implements OnInit, DeactivateAware {
     optionGroups: OptionGroupUiModel[];
     product: GetProductVariantOptions.Product;
     currencyCode: CurrencyCode;
-    globalOptionGroups: Record<string, Option[]>;
+    globalOptionGroups: Array<{ name: string; code: string; options: Option[] }>;
     private languageCode: LanguageCode;
 
     constructor(
@@ -85,17 +85,15 @@ export class ProductVariantsEditorComponent implements OnInit, DeactivateAware {
             this.currencyCode = data.activeChannel.currencyCode;
         });
         this.dataService.facet.getAllFacets().single$.subscribe(data => {
-            this.globalOptionGroups = data.facets.items.reduce((acc, facet) => {
-                const newValue: Record<string, Option[]> = {
-                    ...acc,
-                    [facet.code]: facet.values.map(value => ({
-                        code: value.code,
-                        name: value.name,
-                        locked: false,
-                    })),
-                };
-                return newValue;
-            }, {});
+            this.globalOptionGroups = data.facets.items.map(facet => ({
+                code: facet.code,
+                name: facet.name,
+                options: facet.values.map(value => ({
+                    code: value.code,
+                    name: value.name,
+                    locked: false,
+                })),
+            }));
             this.initOptionsAndVariants();
         });
     }
@@ -171,10 +169,10 @@ export class ProductVariantsEditorComponent implements OnInit, DeactivateAware {
         }
     }
 
-    addOption(index: number, optionName: string) {
+    addOption(index: number, optionName: string, optionCode?: string) {
         const group = this.optionGroups[index];
         if (group) {
-            group.values.push({ name: optionName, locked: false });
+            group.values.push({ name: optionName, code: optionCode, locked: false });
             this.generateVariants();
             this.optionsChanged = true;
         }
@@ -222,8 +220,10 @@ export class ProductVariantsEditorComponent implements OnInit, DeactivateAware {
     }
 
     onChangeGroupName(index: number, value: string): void {
-        const foundGlobalOptionGroup = this.globalOptionGroups[value];
-        this.toggleOptionGroup(index, foundGlobalOptionGroup);
+        const foundGlobalOptionGroup = this.globalOptionGroups.find(
+            optionGroup => optionGroup.name === value || optionGroup.code === value,
+        );
+        this.toggleOptionGroup(index, foundGlobalOptionGroup?.options);
     }
 
     private toggleOptionGroup(index: number, globalOptions?: Option[]) {
@@ -482,7 +482,8 @@ export class ProductVariantsEditorComponent implements OnInit, DeactivateAware {
                     .filter(v => !v.id)
                     .map(v => ({
                         productOptionGroupId,
-                        code: normalizeString(v.code ?? v.name, '-'),
+                        name: v.name,
+                        code: v.code ?? normalizeString(v.name, '-'),
                         translations: [{ name: v.name, languageCode: this.languageCode }],
                     }));
             })
@@ -599,20 +600,10 @@ export class ProductVariantsEditorComponent implements OnInit, DeactivateAware {
     }
 
     private applyGlobalOptions() {
-        const dictionaryOptionGroups = this.optionGroups.reduce(
-            (acc, optionGroup) => ({ ...acc, [optionGroup.name]: optionGroup.values }),
-            {},
-        );
         this.optionGroups.forEach((optionGroup, i) => {
-            const foundGlobalOptions =
-                this.globalOptionGroups[optionGroup.name] &&
-                uniqBy(
-                    [dictionaryOptionGroups[optionGroup.name], this.globalOptionGroups[optionGroup.name]]
-                        .flat()
-                        .filter(Boolean),
-                    'name',
-                );
-
+            const foundGlobalOptions = this.globalOptionGroups.find(
+                og => og.name === optionGroup.name || og.code === optionGroup.name,
+            )?.options;
             this.toggleOptionGroup(i, foundGlobalOptions);
         });
     }

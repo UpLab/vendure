@@ -66,6 +66,7 @@
     "assign-variants-to-channel": "Assign product variants to channel",
     "auto-update-option-variant-name": "Automatically update the names of ProductVariants using this option",
     "auto-update-product-variant-name": "Automatically update the names of ProductVariants",
+    "auto-update-product-option": "Automatically update ProductOptions",
     "channel-price-preview": "Channel price preview",
     "collection-contents": "Collection contents",
     "confirm-bulk-delete-collections": "Delete {count} collections?",

@@ -62,7 +62,7 @@ export class GlobalProductOptionSelectorComponent implements OnChanges, OnInit {
     }
 
     initMergedOptions() {
-        this.mergedOptions = uniqBy([this.options, this.value].flat(), 'name');
+        this.mergedOptions = uniqBy([this.value, this.options].flat(), 'name');
     }
 
     focus() {

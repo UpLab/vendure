@@ -31,7 +31,7 @@
                 [(value)]="group.values"
                 [groupName]="group.name"
                 [(options)]="group.globalOptions"
-                (add)="addOption(i, $event.name)"
+                (add)="addOption(i, $event.name, $event.code)"
                 (remove)="removeOption(i, $event)"
             ></vdr-global-product-option-selector>
         </ng-template>
