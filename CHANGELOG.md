@@ -1,3 +1,10 @@
+## <small>1.10.6 (2023-03-14)</small>
+
+
+#### Features
+
+* **admin-ui** Add global option select to create product form ([a7a6165](https://github.com/UpLab/vendure/commit/a7a6165))
+
 ## <small>1.10.5 (2023-03-08)</small>
 
 

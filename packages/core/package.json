@@ -1,6 +1,6 @@
 {
   "name": "@vendure/core",
-  "version": "1.10.5",
+  "version": "1.10.6",
   "description": "A modern, headless ecommerce framework",
   "private": true,
   "repository": {
