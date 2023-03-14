@@ -482,7 +482,6 @@ export class ProductVariantsEditorComponent implements OnInit, DeactivateAware {
                     .filter(v => !v.id)
                     .map(v => ({
                         productOptionGroupId,
-                        name: v.name,
                         code: v.code ?? normalizeString(v.name, '-'),
                         translations: [{ name: v.name, languageCode: this.languageCode }],
                     }));

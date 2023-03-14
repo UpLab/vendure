@@ -91,7 +91,10 @@ export class ProductDetailService {
         );
     }
 
-    createProductOptionGroups(groups: Array<{ name: string; values: string[] }>, languageCode: LanguageCode) {
+    createProductOptionGroups(
+        groups: Array<{ name: string; values: Array<{ name: string; code?: string }> }>,
+        languageCode: LanguageCode,
+    ) {
         return groups.length
             ? forkJoin(
                   groups.map(c => {
@@ -100,8 +103,8 @@ export class ProductDetailService {
                               code: normalizeString(c.name, '-'),
                               translations: [{ languageCode, name: c.name }],
                               options: c.values.map(v => ({
-                                  code: normalizeString(v, '-'),
-                                  translations: [{ languageCode, name: v }],
+                                  code: v.code ?? normalizeString(v.name, '-'),
+                                  translations: [{ languageCode, name: v.name }],
                               })),
                           })
                           .pipe(map(data => data.createProductOptionGroup));

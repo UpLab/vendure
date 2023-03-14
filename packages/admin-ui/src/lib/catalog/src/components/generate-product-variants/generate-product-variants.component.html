@@ -1,4 +1,4 @@
-<div *ngFor="let group of optionGroups" class="option-groups">
+<div *ngFor="let group of optionGroups; index as i" class="option-groups">
     <div class="name">
         <label>{{ 'catalog.option' | translate }}</label>
         <input
@@ -8,31 +8,43 @@
             [(ngModel)]="group.name"
             name="name"
             required
-            (keydown.enter)="handleEnter($event, optionValueInputComponent)"
+            (keydown.enter)="handleEnter($event)"
+            (input)="onChangeGroupName(i, $event.target.value)"
         />
     </div>
     <div class="values">
         <label>{{ 'catalog.option-values' | translate }}</label>
         <vdr-option-value-input
             #optionValueInputComponent
-            [(ngModel)]="group.values"
-            (ngModelChange)="generateVariants()"
-            (edit)="generateVariants()"
+            *ngIf="!group.isGlobal; else selectGlobalOptions"
+            [options]="group.values"
             [groupName]="group.name"
             [disabled]="group.name === ''"
+            (add)="addOption(i, $event.name)"
+            (remove)="removeOption(i, $event.name)"
         ></vdr-option-value-input>
+        <ng-template #selectGlobalOptions>
+            <vdr-global-product-option-selector
+                #optionValueInputComponent
+                [(value)]="group.values"
+                [groupName]="group.name"
+                [(options)]="group.globalOptions"
+                (add)="addOption(i, $event.name, $event.code)"
+                (remove)="removeOption(i, $event.name)"
+                ></vdr-global-product-option-selector>
+        </ng-template>
     </div>
     <div class="remove-group">
         <button
             class="btn btn-icon btn-warning-outline"
             [title]="'catalog.remove-option' | translate"
-            (click)="removeOption(group.name)"
+            (click)="removeOptionGroup(group.name)"
         >
             <clr-icon shape="trash"></clr-icon>
         </button>
     </div>
 </div>
-<button class="btn btn-primary-outline btn-sm" (click)="addOption()">
+<button class="btn btn-primary-outline btn-sm" (click)="addOptionGroup()">
     <clr-icon shape="plus"></clr-icon>
     {{ 'catalog.add-option' | translate }}
 </button>

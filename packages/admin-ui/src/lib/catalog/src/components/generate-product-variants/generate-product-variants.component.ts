@@ -1,5 +1,15 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
-import { CurrencyCode, DataService } from '@uplab/admin-ui/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    OnInit,
+    Output,
+    QueryList,
+    ViewChild,
+    ViewChildren,
+} from '@angular/core';
+import { CurrencyCode, DataService, Option } from '@uplab/admin-ui/core';
+import { GlobalProductOptionSelectorComponent } from '@uplab/admin-ui/core';
 import { generateAllCombinations } from '@vendure/common/lib/shared-utils';
 
 import { OptionValueInputComponent } from '../option-value-input/option-value-input.component';
@@ -13,7 +23,7 @@ export type CreateVariantValues = {
     stock: number;
 };
 export type CreateProductVariantsConfig = {
-    groups: Array<{ name: string; values: string[] }>;
+    groups: Array<{ name: string; values: Array<{ name: string; code?: string }> }>;
     variants: CreateVariantValues[];
 };
 
@@ -25,21 +35,75 @@ export type CreateProductVariantsConfig = {
 export class GenerateProductVariantsComponent implements OnInit {
     @Output() variantsChange = new EventEmitter<CreateProductVariantsConfig>();
     @ViewChildren('optionGroupName', { read: ElementRef }) groupNameInputs: QueryList<ElementRef>;
-    optionGroups: Array<{ name: string; values: Array<{ name: string; locked: boolean }> }> = [];
+    @ViewChild('optionValueInputComponent') private optionValueInputComponent:
+        | OptionValueInputComponent
+        | GlobalProductOptionSelectorComponent;
+    optionGroups: Array<{
+        name: string;
+        isGlobal?: boolean;
+        globalOptions?: Option[];
+        values: Array<{
+            name: string;
+            code?: string;
+            locked: boolean;
+        }>;
+    }> = [];
     currencyCode: CurrencyCode;
     variants: Array<{ id: string; values: string[] }>;
     variantFormValues: { [id: string]: CreateVariantValues } = {};
+    globalOptionGroups: Array<{ name: string; code: string; options: Option[] }>;
     constructor(private dataService: DataService) {}
 
     ngOnInit() {
         this.dataService.settings.getActiveChannel().single$.subscribe(data => {
             this.currencyCode = data.activeChannel.currencyCode;
         });
+        this.dataService.facet.getAllFacets().single$.subscribe(data => {
+            this.globalOptionGroups = data.facets.items.map(facet => ({
+                code: facet.code,
+                name: facet.name,
+                options: facet.values.map(value => ({
+                    code: value.code,
+                    name: value.name,
+                    locked: false,
+                })),
+            }));
+        });
 
         this.generateVariants();
     }
 
-    addOption() {
+    addOption(index: number, optionName: string, optionCode?: string) {
+        const group = this.optionGroups[index];
+        if (group) {
+            group.values.push({ name: optionName, code: optionCode, locked: false });
+            this.generateVariants();
+        }
+    }
+
+    onChangeGroupName(index: number, value: string): void {
+        const globalOptions = this.globalOptionGroups.find(
+            optionGroup => optionGroup.name === value || optionGroup.code === value,
+        )?.options;
+
+        if (globalOptions) {
+            this.optionGroups[index].isGlobal = true;
+            this.optionGroups[index].globalOptions = globalOptions;
+        } else {
+            this.optionGroups[index].isGlobal = false;
+            this.optionGroups[index].globalOptions = undefined;
+        }
+    }
+
+    removeOption(index: number, optionName: string) {
+        const group = this.optionGroups[index];
+        if (group) {
+            group.values = group.values.filter(v => v.name !== optionName);
+            this.generateVariants();
+        }
+    }
+
+    addOptionGroup() {
         this.optionGroups.push({ name: '', values: [] });
         const index = this.optionGroups.length - 1;
         setTimeout(() => {
@@ -48,7 +112,7 @@ export class GenerateProductVariantsComponent implements OnInit {
         });
     }
 
-    removeOption(name: string) {
+    removeOptionGroup(name: string) {
         this.optionGroups = this.optionGroups.filter(g => g.name !== name);
         this.generateVariants();
     }
@@ -78,16 +142,19 @@ export class GenerateProductVariantsComponent implements OnInit {
         return variant.values.join('|');
     }
 
-    handleEnter(event: KeyboardEvent, optionValueInputComponent: OptionValueInputComponent) {
+    handleEnter(event: KeyboardEvent) {
         event.preventDefault();
         event.stopPropagation();
-        optionValueInputComponent.focus();
+        this.optionValueInputComponent?.focus();
     }
 
     onFormChange() {
         const variantsToCreate = this.variants.map(v => this.variantFormValues[v.id]).filter(v => v.enabled);
         this.variantsChange.emit({
-            groups: this.optionGroups.map(og => ({ name: og.name, values: og.values.map(v => v.name) })),
+            groups: this.optionGroups.map(og => ({
+                name: og.name,
+                values: og.values.map(v => ({ name: v.name, code: v.code })),
+            })),
             variants: variantsToCreate,
         });
     }
