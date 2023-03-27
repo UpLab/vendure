@@ -18,7 +18,7 @@ import {
     TranslationOf,
     UpdateProductOptionGroupInput,
     UpdateProductOptionInput,
-} from '@vendure/admin-ui/core';
+} from '@uplab/admin-ui/core';
 import { combineLatest, forkJoin, Observable } from 'rxjs';
 import { map, mergeMap, take } from 'rxjs/operators';
 
