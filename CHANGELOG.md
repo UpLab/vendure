@@ -1,3 +1,15 @@
+## <small>1.10.8 (2023-03-27)</small>
+
+
+#### Fixes
+
+* **admin-ui** Fix import ([983db4c](https://github.com/UpLab/vendure/commit/983db4c))
+* **admin-ui** Re-fetch asset list on channel change ([e909725](https://github.com/UpLab/vendure/commit/e909725))
+* **core** Correctly validate couponCode when adding guest customer ([a0458e2](https://github.com/UpLab/vendure/commit/a0458e2))
+* **core** Do not double-refund payments when refund total not covered ([64372da](https://github.com/UpLab/vendure/commit/64372da))
+* **core** Slugify product created with fast importer service (#2091) ([8e9f4d6](https://github.com/UpLab/vendure/commit/8e9f4d6)), closes [#2091](https://github.com/UpLab/vendure/issues/2091)
+* **payments-plugin** Handle multiple payments & verify stock for Mollie ([1aad00e](https://github.com/UpLab/vendure/commit/1aad00e)), closes [#2026](https://github.com/UpLab/vendure/issues/2026) [#2030](https://github.com/UpLab/vendure/issues/2030)
+
 ## <small>1.9.5 (2023-03-24)</small>
 
 #### Fixes 

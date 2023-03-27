@@ -1,6 +1,6 @@
 {
   "name": "@uplab/common",
-  "version": "1.10.7",
+  "version": "1.10.8",
   "main": "index.js",
   "license": "MIT",
   "private": true,
