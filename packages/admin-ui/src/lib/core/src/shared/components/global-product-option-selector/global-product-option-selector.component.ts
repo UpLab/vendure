@@ -17,6 +17,7 @@ export type Option = {
     id?: string;
     name: string;
     code?: string;
+    customFields?: {};
     locked: boolean;
 };
 

@@ -92,6 +92,7 @@ export class ProductVariantsEditorComponent implements OnInit, DeactivateAware {
                     code: value.code,
                     name: value.name,
                     locked: false,
+                    customFields: value.customFields,
                 })),
             }));
             this.initOptionsAndVariants();
@@ -169,10 +170,10 @@ export class ProductVariantsEditorComponent implements OnInit, DeactivateAware {
         }
     }
 
-    addOption(index: number, optionName: string, optionCode?: string) {
+    addOption(index: number, optionName: string, optionCode?: string, customFields?: {}) {
         const group = this.optionGroups[index];
         if (group) {
-            group.values.push({ name: optionName, code: optionCode, locked: false });
+            group.values.push({ name: optionName, code: optionCode, customFields, locked: false });
             this.generateVariants();
             this.optionsChanged = true;
         }
@@ -484,6 +485,7 @@ export class ProductVariantsEditorComponent implements OnInit, DeactivateAware {
                         productOptionGroupId,
                         code: v.code ?? normalizeString(v.name, '-'),
                         translations: [{ name: v.name, languageCode: this.languageCode }],
+                        customFields: v.customFields,
                     }));
             })
             .flat();

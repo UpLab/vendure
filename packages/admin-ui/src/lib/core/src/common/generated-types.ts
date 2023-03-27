@@ -6552,7 +6552,7 @@ export type DeleteCustomerNoteMutation = { deleteCustomerNote: (
 
 export type FacetValueFragment = (
   { __typename?: 'FacetValue' }
-  & Pick<FacetValue, 'id' | 'createdAt' | 'updatedAt' | 'languageCode' | 'code' | 'name'>
+  & Pick<FacetValue, 'id' | 'createdAt' | 'updatedAt' | 'languageCode' | 'code' | 'name' | 'customFields'>
   & { translations: Array<(
     { __typename?: 'FacetValueTranslation' }
     & Pick<FacetValueTranslation, 'id' | 'languageCode' | 'name'>
