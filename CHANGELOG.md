@@ -1,3 +1,10 @@
+## <small>1.10.7 (2023-03-27)</small>
+
+
+#### Features
+
+* **admin-ui** Implement custom fields updating of ProductOptionGroup and ProductOption entities ([294dcd3](https://github.com/UpLab/vendure/commit/294dcd3))
+
 ## <small>1.10.6 (2023-03-14)</small>
 
 
