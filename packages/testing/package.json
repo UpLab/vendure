@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@types/node-fetch": "^2.5.4",
-    "@vendure/common": "^1.9.3",
+    "@vendure/common": "^1.9.5",
     "faker": "^4.1.0",
     "form-data": "^3.0.0",
     "graphql": "15.5.1",
